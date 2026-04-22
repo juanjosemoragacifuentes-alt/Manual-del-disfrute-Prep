@@ -139,6 +139,11 @@ input::placeholder{color:rgba(255,255,255,0.6) !important}
   .chapters-grid{grid-template-columns:1fr !important;gap:1rem !important}
   .chapter-card::after{font-size:5rem !important;top:-0.1rem !important}
   #hero{padding:2rem 1rem .5rem !important}
+  #secreto{padding:2rem 1.5rem 4rem !important}
+  #opciones-secreto{padding:0 .5rem}
+  #opciones-secreto > div{gap:.75rem !important;grid-template-columns:repeat(2,1fr) !important}
+  .opcion-card{padding:1.25rem .75rem !important}
+  #modal-img{touch-action:pan-y;user-select:none;-webkit-user-drag:none}
 }
 </style>
 </head>
@@ -200,7 +205,7 @@ input::placeholder{color:rgba(255,255,255,0.6) !important}
 </section>
 
 <!-- CAPITULO SECRETO -->
-<section id="secreto" style="position:relative;z-index:1" style="padding:3rem 1.5rem 5rem;background:transparent;text-align:center">
+<section id="secreto" style="position:relative;z-index:1;padding:3rem 1.5rem 5rem;background:transparent;text-align:center">
 
   <div id="card-secreto" onclick="toggleSecreto()" style="max-width:900px;margin:0 auto;background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.25);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:20px;padding:2rem 1.5rem;cursor:pointer;transition:border-color .25s;position:relative;overflow:hidden">
     <span style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:#ff4d88;letter-spacing:3px;display:block;margin-bottom:.5rem">CAPÍTULO SECRETO</span>
@@ -400,6 +405,41 @@ function elegir(opcion){
 function otraPosicion(){
   if(categoriaActual) elegir(categoriaActual);
 }
+
+(function(){
+  var touchX = 0, touchY = 0, swiping = false;
+  function onStart(e){
+    var t = e.touches ? e.touches[0] : e;
+    touchX = t.clientX; touchY = t.clientY; swiping = true;
+  }
+  function onEnd(e){
+    if(!swiping) return;
+    swiping = false;
+    var t = e.changedTouches ? e.changedTouches[0] : e;
+    var dx = t.clientX - touchX;
+    var dy = t.clientY - touchY;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)*1.2){
+      var imgEl = document.getElementById('modal-img');
+      var imgs = imgEl && imgEl.dataset.imgs ? JSON.parse(imgEl.dataset.imgs || '[]') : [];
+      if(imgs.length > 1){
+        navModal(dx < 0 ? 1 : -1);
+        imgEl.style.transition = 'transform .18s ease, opacity .18s ease';
+        imgEl.style.transform = 'translateX(' + (dx < 0 ? '-8px' : '8px') + ')';
+        imgEl.style.opacity = '.6';
+        setTimeout(function(){
+          imgEl.style.transform = '';
+          imgEl.style.opacity = '';
+        }, 180);
+      }
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var wrapper = document.getElementById('modal-img-wrapper');
+    if(!wrapper) return;
+    wrapper.addEventListener('touchstart', onStart, {passive:true});
+    wrapper.addEventListener('touchend', onEnd, {passive:true});
+  });
+})();
 
 function cerrarModal(){
   document.getElementById('modal-posicion').style.display = 'none';
