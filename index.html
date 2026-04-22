@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Manual del Disfrute — PrEP</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Coolvetica';
+  src: url('assets/asset_font_01.otf') format('opentype');
+  font-weight: normal;
+}
+@font-face {
+  font-family: 'Moon Get';
+  src: url('assets/moon_get-Heavy.otf') format('opentype');
+  font-weight: 900;
+  font-display: swap;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#4a3fc0;color:#fff;font-family:'Coolvetica',sans-serif;min-height:100vh}
+
+/* OVERLAY */
+#overlay{position:fixed;inset:0;background:rgba(40,0,60,0.88);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
+#popup{background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.25);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:20px;padding:2.5rem 2rem;max-width:520px;width:100%;text-align:center}
+#popup .cherry{font-size:2rem;display:block;margin-bottom:.5rem}
+#popup h2{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:#e8003d;margin-bottom:.3rem;letter-spacing:2px}
+#popup .sub{font-size:.85rem;color:#fff;margin-bottom:1.5rem;line-height:1.6;font-family:'Coolvetica',sans-serif}
+#popup input{width:100%;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:.75rem 1rem;color:#fff;font-size:.95rem;margin-bottom:.75rem;outline:none;transition:border-color .2s;text-align:center;font-family:'Coolvetica',sans-serif}
+#popup input:focus{border-color:#e8003d}
+#popup input::placeholder{color:#666}
+.btn-primary{width:100%;background:rgba(255,77,136,0.22);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;border:1px solid rgba(255,77,136,0.45);box-shadow:0 8px 32px rgba(255,77,136,0.15),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:12px;padding:.85rem;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:border-color .2s,background .2s;font-family:'Coolvetica',sans-serif}
+.btn-primary:hover{border-color:rgba(255,77,136,0.75);background:rgba(255,77,136,0.32)}
+
+.btn-glass{background:rgba(255,77,136,0.22);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#fff;border:1px solid rgba(255,77,136,0.45);box-shadow:0 8px 32px rgba(255,77,136,0.15),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:12px;padding:.85rem 1.25rem;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.btn-glass:hover{border-color:rgba(255,77,136,0.75);background:rgba(255,77,136,0.32);transform:translateY(-2px)}
+.btn-skip{background:none;border:none;color:#555;font-size:.8rem;cursor:pointer;margin-top:1rem;display:block;width:100%;text-decoration:underline;transition:color .2s;font-family:'Coolvetica',sans-serif}
+.btn-skip:hover{color:#aaa}
+
+/* HERO */
+#hero{min-height:unset;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem 1rem;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,0.08) 0%,transparent 65%)}
+.hero-eyebrow{font-size:.8rem;letter-spacing:4px;text-transform:uppercase;color:#e8003d;margin-bottom:1.5rem;font-weight:700}
+.hero-logo{width:min(800px,95vw);position:relative;z-index:1;margin-bottom:1.5rem}
+.hero-icons{font-size:2rem;margin:.5rem 0 1.5rem;letter-spacing:8px}
+.hero-desc{max-width:520px;margin:0 auto 2rem;font-size:1rem;color:#fff;line-height:1.7;position:relative;z-index:1}
+.hero-badge{display:inline-block;border:1px solid #e8003d;color:#e8003d;border-radius:50px;padding:.5rem 1.5rem;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+
+/* CHAPTERS */
+#capitulos{padding:0 1.5rem 5rem;background:transparent}
+.section-label{text-align:center;font-size:.75rem;letter-spacing:5px;text-transform:uppercase;color:#e8003d;margin-bottom:.75rem;font-weight:700}
+.section-title{text-align:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,6vw,3.5rem);color:#fff;margin-bottom:3rem;letter-spacing:2px}
+.chapters-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;max-width:900px;margin:0 auto}
+.chapter-card{background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.25);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:20px;padding:1.75rem 1.5rem;position:relative;overflow:hidden;transition:border-color .25s,transform .2s;cursor:pointer}
+.chapter-card:hover{border-color:rgba(255,255,255,0.5);transform:translateY(-3px)}
+.chapter-card::after{content:attr(data-num);position:absolute;top:-0.25rem;right:0.25rem;font-family:'Moon Get',sans-serif;font-weight:900;font-size:clamp(5rem,10vw,8rem);line-height:0.9;color:transparent;-webkit-text-stroke:1.5px rgba(255,77,136,0.55);pointer-events:none;transition:-webkit-text-stroke-color .3s ease,transform .4s cubic-bezier(0.22,0.8,0.22,1);z-index:0}
+.chapter-card > *{position:relative;z-index:1}
+.chapter-card:hover::after{-webkit-text-stroke-color:#ff4d88;transform:rotate(-4deg) scale(1.08)}
+@media (prefers-reduced-motion:reduce){.chapter-card::after{transition:none}.chapter-card:hover::after{transform:none}}
+.chapter-num{font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:#ff4d88 !important;letter-spacing:3px;margin-bottom:.5rem;display:block !important}
+.chapter-title{font-family:'Bebas Neue',sans-serif !important;font-size:1.65rem;color:#fff;line-height:1.1;margin-bottom:.5rem;letter-spacing:1.5px;font-weight:700;text-transform:uppercase}
+.chapter-sub{font-size:.75rem;color:rgba(255,255,255,0.65);font-style:italic;letter-spacing:1px;text-transform:uppercase}
+.chapter-icon{position:absolute;top:1.25rem;right:1.25rem;font-size:1.4rem;opacity:.5}
+
+/* PREP INFO */
+#prep-info{background:rgba(0,0,0,0.35);border-top:1px solid rgba(255,255,255,0.15);border-bottom:1px solid rgba(255,255,255,0.15);padding:4rem 1.5rem;text-align:center;backdrop-filter:blur(4px)}
+.prep-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);color:#fff;margin-bottom:1rem;letter-spacing:2px}
+.prep-title span{color:#e8003d}
+.prep-text{max-width:560px;margin:0 auto;color:#fff;line-height:1.8;font-size:.95rem}
+
+/* FOOTER */
+#footer{padding:2.5rem 1.5rem;text-align:center;border-top:1px solid #1a1a1a}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#e8003d;letter-spacing:3px;margin-bottom:.5rem}
+.footer-text{font-size:.8rem;color:#555}
+
+*{}
+a{color:#fff !important}
+p,span,div:not(.chapter-title),h1,h2,h3,h4,h5,li{font-family:'Coolvetica',sans-serif !important;color:#fff}
+input{color:#fff !important; font-family:'Coolvetica',sans-serif !important}
+input::placeholder{color:rgba(255,255,255,0.6) !important}
+.chapter-num{color:#ff4d88 !important}
+.chapter-sub{color:rgba(255,255,255,0.8) !important}
+.section-label{color:#fff !important}
+.prep-title span{color:#fff !important}
+.opcion-icon{color:#fff !important}
+.footer-text{color:#fff !important}
+.btn-skip{color:rgba(255,255,255,0.7) !important}
+
+/* ===== Motion ===== */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+  @keyframes popIn  { from{opacity:0;transform:scale(0.96) translateY(8px)} to{opacity:1;transform:none} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  @keyframes float  { 0%,100%{transform:translateY(0) rotate(var(--rot,0deg))} 50%{transform:translateY(-6px) rotate(var(--rot,0deg))} }
+
+  #hero { animation: fadeUp 700ms cubic-bezier(0.2,0.8,0.2,1) both; }
+  .chapter-card { animation: fadeUp 650ms cubic-bezier(0.2,0.8,0.2,1) both; }
+  .chapter-card:nth-child(1){animation-delay:120ms}
+  .chapter-card:nth-child(2){animation-delay:200ms}
+  .chapter-card:nth-child(3){animation-delay:280ms}
+  .chapter-card:nth-child(4){animation-delay:360ms}
+  .chapter-card:nth-child(5){animation-delay:440ms}
+  #secreto  { animation: fadeUp 700ms cubic-bezier(0.2,0.8,0.2,1) 500ms both; }
+  #prep-info{ animation: fadeUp 700ms cubic-bezier(0.2,0.8,0.2,1) 600ms both; }
+  #footer   { animation: fadeUp 700ms cubic-bezier(0.2,0.8,0.2,1) 680ms both; }
+
+  #overlay { animation: fadeIn 280ms ease-out both; }
+  #popup   { animation: popIn 460ms cubic-bezier(0.2,0.8,0.2,1) both; }
+  #modal-posicion { animation: fadeIn 220ms ease-out both; }
+  #modal-posicion > div { animation: popIn 380ms cubic-bezier(0.2,0.8,0.2,1) both; }
+  #opciones-secreto { animation: fadeUp 420ms cubic-bezier(0.2,0.8,0.2,1) both; }
+
+  .chapter-card, .opcion-card, #card-secreto { transition: transform 260ms cubic-bezier(0.2,0.8,0.2,1), border-color 260ms ease, box-shadow 260ms ease, background 260ms ease; }
+  .btn-primary, .btn-skip { transition: background 180ms ease, color 180ms ease, transform 180ms cubic-bezier(0.2,0.8,0.2,1); }
+  .btn-primary:active { transform: translateY(1px) scale(0.98); }
+
+  .opcion-card:hover { transform: translateY(-4px); }
+  .opcion-card.activa { transform: translateY(-2px); box-shadow: 0 12px 28px -12px rgba(255,77,136,0.45); }
+
+  #card-secreto:hover { transform: translateY(-4px); border-color: rgba(255,77,136,0.6) !important; }
+
+  .chapter-card:active { transform: translateY(-2px) scale(0.99); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body><div style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none"><img src="assets/asset_image_01.png" style="position:absolute;top:3vh;left:3vw;width:110px;opacity:0.4;transform:rotate(8deg)"><img src="assets/asset_image_02.png" style="position:absolute;top:3vh;left:38vw;width:110px;opacity:0.4;transform:rotate(-5deg)"><img src="assets/asset_image_03.png" style="position:absolute;top:3vh;left:78vw;width:110px;opacity:0.4;transform:rotate(-10deg)"><img src="assets/asset_image_04.png" style="position:absolute;top:22vh;left:15vw;width:110px;opacity:0.4;transform:rotate(-12deg)"><img src="assets/asset_image_05.png" style="position:absolute;top:22vh;left:75vw;width:110px;opacity:0.4;transform:rotate(10deg)"><img src="assets/asset_image_06.png" style="position:absolute;top:40vh;left:2vw;width:110px;opacity:0.4;transform:rotate(6deg)"><img src="assets/asset_image_07.png" style="position:absolute;top:40vh;left:48vw;width:110px;opacity:0.4;transform:rotate(-8deg)"><img src="assets/asset_image_08.png" style="position:absolute;top:40vh;left:82vw;width:110px;opacity:0.4;transform:rotate(14deg)"><img src="assets/asset_image_09.png" style="position:absolute;top:60vh;left:20vw;width:110px;opacity:0.4;transform:rotate(-6deg)"><img src="assets/asset_image_10.png" style="position:absolute;top:60vh;left:70vw;width:110px;opacity:0.4;transform:rotate(8deg)"><img src="assets/asset_image_11.png" style="position:absolute;top:78vh;left:5vw;width:110px;opacity:0.4;transform:rotate(10deg)"><img src="assets/asset_image_12.png" style="position:absolute;top:78vh;left:55vw;width:110px;opacity:0.4;transform:rotate(-12deg)"></div>
+
+<!-- POPUP -->
+<div id="overlay">
+  <div id="popup">
+    <img src="assets/asset_image_13.png" alt="El Manual del Disfrute" style="width:380px;max-width:100%;margin-bottom:1rem;display:block;margin-left:auto;margin-right:auto">
+    
+    <p class="sub">Déjanos tus datos para recibir más información sobre la PrEP y consultas médicas gratuitas.</p>
+    <input type="text" id="inp-nombre" placeholder="Tu nombre" />
+    <input type="email" id="inp-email" placeholder="Tu email" />
+    <button class="btn-primary" onclick="enviarForm()">QUIERO SABER MÁS <img src="assets/7.png" alt="" style="width:2.4rem;height:2.4rem;object-fit:contain;vertical-align:middle;margin-left:.5rem"></button>
+    <button class="btn-skip" onclick="cerrarPopup()">Explorar sin registrarme</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero" style="position:relative;z-index:1">
+  <img src="assets/asset_image_14.png" alt="Fundación Chile Positivo" style="width:160px;margin-bottom:1.5rem;position:relative;z-index:1">
+  <img class="hero-logo" style="" src="assets/asset_image_15.png" alt="El Manual del Disfrute PrEP" />
+  
+  
+  
+</section>
+
+<!-- CHAPTERS -->
+<section id="capitulos" style="position:relative;z-index:1">
+  
+  
+  <div class="chapters-grid">
+    <div class="chapter-card" data-num="1" style="cursor:pointer" onclick="mostrarCapitulo('La Montaña Mágica', descCap01, null, imgsCap01)">
+<div class="chapter-title">Afírmate y que nada se caiga</div>
+      <div class="chapter-sub">La Montaña Mágica</div>
+      
+    </div>
+    <div class="chapter-card" data-num="2" style="cursor:pointer" onclick="mostrarCapitulo('La Vaquera', descCap02, null, imgsCap02)">
+<div class="chapter-title">Arriba tú. Abajo el miedo</div>
+      <div class="chapter-sub">La Vaquera</div>
+      
+    </div>
+    <div class="chapter-card" data-num="3" style="cursor:pointer" onclick="mostrarCapitulo('Garganta Profunda', descCap03, null, imgsCap03)">
+<div class="chapter-title">Trágate el mundo entero</div>
+      <div class="chapter-sub">Garganta Profunda</div>
+      
+    </div>
+    <div class="chapter-card" data-num="4" style="cursor:pointer" onclick="mostrarCapitulo('La Tijera', descCap04, null, imgsCap04)">
+<div class="chapter-title">Corta la distancia, hasta que choque</div>
+      <div class="chapter-sub">La Tijera</div>
+      
+    </div>
+    <div class="chapter-card" data-num="5" style="cursor:pointer" onclick="mostrarCapitulo('El Ascensor', descCap05, null, imgsCap05)">
+<div class="chapter-title">Toca hasta el último botón</div>
+      <div class="chapter-sub">El Ascensor</div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- CAPITULO SECRETO -->
+<section id="secreto" style="position:relative;z-index:1" style="padding:3rem 1.5rem 5rem;background:transparent;text-align:center">
+
+  <div id="card-secreto" onclick="toggleSecreto()" style="max-width:900px;margin:0 auto;background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.25);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:20px;padding:2rem 1.5rem;cursor:pointer;transition:border-color .25s;position:relative;overflow:hidden">
+    <span style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;color:#ff4d88;letter-spacing:3px;display:block;margin-bottom:.5rem">CAPÍTULO SECRETO</span>
+    <div style="font-size:4rem;color:#ff4d88;line-height:1;text-align:center">?</div>
+    <p style="font-size:.8rem;color:#fff;margin-top:.5rem">Toca para revelar</p>
+  </div>
+
+  <!-- OPCIONES -->
+  <div id="opciones-secreto" style="display:none;max-width:900px;margin:1.5rem auto 0">
+    <p style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#fff;letter-spacing:2px;margin-bottom:1.5rem;text-align:center">¿QUÉ PREFIERES?</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem">
+
+      <div class="opcion-card" onclick="this.closest('.opcion-card') && document.querySelectorAll('.opcion-card').forEach(c=>c.classList.remove('activa')); this.classList.add('activa'); elegir('heterosexual')">
+        <div class="opcion-icon">♀♂</div>
+        <div class="opcion-label">Heterosexual</div>
+      </div>
+
+      <div class="opcion-card" onclick="elegir('gay')">
+        <div class="opcion-icon">♂♂</div>
+        <div class="opcion-label">Gay</div>
+      </div>
+
+      <div class="opcion-card" onclick="elegir('lesbico')">
+        <div class="opcion-icon">♀♀</div>
+        <div class="opcion-label">Lésbico</div>
+      </div>
+
+      <div class="opcion-card" onclick="elegir('oral')">
+        <div class="opcion-icon"><img src="assets/7.png" alt="Sexo Oral" style="width:3.2rem;height:3.2rem;object-fit:contain;display:block;margin:0 auto"></div>
+        <div class="opcion-label">Sexo Oral</div>
+      </div>
+
+      <div class="opcion-card" onclick="elegir('trio')">
+        <div class="opcion-icon">♂♀♂</div>
+        <div class="opcion-label">Trío</div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+<!-- PREP INFO -->
+<section id="prep-info" style="position:relative;z-index:1;margin-top:3rem">
+  <h3 class="prep-title">¿QUÉ ES LA <span>PrEP</span>?</h3>
+  <p class="prep-text">La PrEP (Profilaxis Pre-Exposición) es un medicamento que, tomado correctamente, previene el contagio del VIH. Con PrEP puedes disfrutar de tu sexualidad sin miedo. En Chile es gratuita y está disponible en el sistema público de salud.</p>
+</section>
+
+<!-- FOOTER -->
+
+
+
+<style>
+.opcion-card{background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.25);box-shadow:0 8px 32px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:20px;padding:1.5rem 1rem;cursor:pointer;transition:border-color .25s,transform .2s;text-align:center}
+.opcion-card:hover{border-color:rgba(255,255,255,0.5);transform:translateY(-3px)}
+.opcion-icon{font-size:1.8rem;color:#ff4d88;margin-bottom:.5rem;font-family:sans-serif}
+.opcion-label{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:#fff;letter-spacing:1px}
+</style>
+
+<script>
+function toggleSecreto(){
+  var op = document.getElementById('opciones-secreto');
+  var card = document.getElementById('card-secreto');
+  if(op.style.display === 'none' || op.style.display === ''){
+    op.style.display = 'block';
+    card.style.borderColor = '#ff4d88';
+  } else {
+    op.style.display = 'none';
+    card.style.borderColor = '#222';
+  }
+}
+
+var posiciones = {
+  heterosexual: [
+    {nombre:'El Misionero', desc:'La persona que recibe la penetración se acuesta boca arriba con las piernas ligeramente abiertas, mientras que la otra persona se coloca encima, apoyándose en sus brazos para realizar el acto.'},
+    {nombre:'La Amazona', desc:'Quien recibe la penetración se sienta sobre la otra persona, utilizando una silla como apoyo para mantener la estabilidad.'},
+    {nombre:'El Perrito', desc:'La persona receptora se apoya sobre sus rodillas y manos. Quien penetra se ubica detrás, también de rodillas, lo que permite controlar la profundidad y facilita la estimulación del clítoris manualmente o con juguetes.'},
+    {nombre:'El Ventilador', desc:'Quien recibe la penetración apoya sus brazos sobre una superficie elevada, arqueando ligeramente la espalda, mientras la otra persona se posiciona detrás.'},
+    {nombre:'La Doble P', desc:'Diseñada para el masaje de próstata; la persona que recibe la estimulación se acuesta boca arriba y la otra se coloca frente a ella en una posición cómoda para realizar el masaje.'},
+    {nombre:'La Silla de la Reina', desc:'La persona receptora se sienta sobre el rostro de su pareja (quien está boca arriba), distribuyendo su peso mediante el apoyo de las rodillas o caderas para no ejercer presión excesiva.'},
+    {nombre:'La L', desc:'Se practica sobre una superficie alta; la persona receptora se acuesta boca arriba rodeando con sus piernas a quien penetra, permitiendo que los genitales queden a la altura de la mesa y facilitando la estimulación del clítoris.'},
+    {nombre:'La Cucharita', desc:'Ambos se recuestan de lado. La penetración ocurre desde atrás, dejando las manos libres para estimular la zona vaginal o utilizar juguetes.'}
+  ],
+  gay: [
+    {nombre:'La H Especial', desc:'Una versión de pie de la cucharita donde ambas personas se colocan una detrás de la otra para la penetración anal.'},
+    {nombre:'El Cangrejo', desc:'La persona pasiva se coloca arriba, sosteniendo su peso con pies y manos para marcar el ritmo, mientras que la persona activa se recuesta boca arriba debajo.'},
+    {nombre:'El Vaquero del Revés', desc:'Quien está arriba "cabalga" dándole la espalda a su pareja, lo que permite estimular la zona P de la persona de abajo manualmente o con dispositivos prostáticos.'},
+    {nombre:'La Doble Mortal', desc:'La persona pasiva se acuesta boca arriba con las rodillas cerca del pecho. La persona activa se sienta sobre sus glúteos para penetrar desde arriba. Permite intercambiar los roles fácilmente.'},
+    {nombre:'La Sorpresa', desc:'Una variante del perrito donde la persona activa permanece de pie y la receptora se agacha ligeramente para alinear sus caderas, pudiendo apoyarse en un objeto para mantener el equilibrio.'},
+    {nombre:'Al Borde de la Cama', desc:'Quien recibe la penetración se acuesta boca arriba al borde de una superficie plana, permitiendo que la persona activa realice el acto de pie para lograr mayor profundidad.'},
+    {nombre:'La Profunda', desc:'La persona pasiva se acuesta boca arriba con las rodillas flexionadas y coloca sus tobillos sobre los hombros de la persona activa para asegurar una penetración sin obstáculos.'}
+  ],
+  lesbico: [
+    {nombre:'La Panorámica', desc:'Una persona se coloca a horcajadas sobre el rostro de su pareja para recibir sexo oral, utilizando el peso corporal para una estimulación más directa.'},
+    {nombre:'El Túnel', desc:'Una persona se coloca en posición de cuatro patas mientras la otra se desliza boca arriba debajo de ella para estimular la vulva con la boca o los dedos.'},
+    {nombre:'Tijeras Simples', desc:'Ambas personas buscan el contacto y la fricción genital directa, ya sea acostadas o sentadas, pudiendo apoyarse en manos o codos.'},
+    {nombre:'El Columpio', desc:'Una persona se acuesta arqueando las piernas alrededor de la cintura de la otra, quien se sienta encima para controlar el ritmo y frotar la zona del clítoris.'},
+    {nombre:'La Entrega', desc:'Una persona se acuesta boca arriba con las piernas flexionadas mientras la otra, de lado, estimula el clítoris o penetra con los dedos, aprovechando la cercanía para estimular también los pechos.'},
+    {nombre:'La Ofrenda', desc:'Una persona se sienta o arrodilla entre las piernas de su pareja, permitiendo una penetración manual profunda y el uso de ambas manos para estimular el clítoris simultáneamente.'},
+    {nombre:'La Cuchara', desc:'Recostadas de lado, la persona de atrás acaricia los genitales o penetra con los dedos, manteniendo una cercanía auditiva ideal para la comunicación íntima.'},
+    {nombre:'La Misionera', desc:'Una persona se acuesta boca arriba y la otra se coloca encima, utilizando un arnés con dildo para controlar la profundidad y el ritmo mientras mantienen contacto visual.'}
+  ],
+  oral: [
+    {nombre:'Postura del 69', desc:'Ambos se acuestan en direcciones opuestas para que sus bocas queden a la altura de los genitales del otro, permitiendo dar y recibir placer al mismo tiempo.'},
+    {nombre:'Spiderman', desc:'Una variante del 69 donde una persona se acuesta al borde de una superficie y la otra permanece de pie o agachada, facilitando el acceso mutuo de forma más cómoda.'},
+    {nombre:'El Guateque', desc:'La persona que brinda el placer se acuesta boca arriba, mientras que la receptora se coloca encima apoyada en sus rodillas, guiando el movimiento con sus manos.'},
+    {nombre:'Heredero al Trono', desc:'Una persona se sienta en una silla mientras la otra se arrodilla en el suelo frente a ella, permitiendo una visión completa y juegos con las piernas.'},
+    {nombre:'La Mariposa', desc:'Quien recibe el placer se sienta a horcajadas con las rodillas a la altura de los oídos de su pareja, presionando el clítoris contra la lengua mientras gira las caderas.'},
+    {nombre:'Sexo Oral en Perrito', desc:'El receptor se coloca a cuatro patas, permitiendo la estimulación del clítoris con los dedos y la posibilidad de contacto anal.'},
+    {nombre:'El Swiper', desc:'Se utiliza una almohada para elevar las caderas del receptor mientras la pareja usa la boca para succionar y realizar movimientos laterales deslizantes sobre el clítoris.'}
+  ],
+  trio: [
+    {nombre:'Doble Oral', desc:'Dos personas realizan sexo oral simultáneamente a la tercera, pudiendo enfocarse en distintas áreas o interactuar entre ellas.'},
+    {nombre:'Doble Vaquera', desc:'Mientras una pareja realiza la postura de la vaquera, la tercera persona se sienta sobre el rostro de quien está acostado para recibir sexo oral.'},
+    {nombre:'El Tren de Perritos', desc:'Tres personas se colocan en posición de cuatro patas en fila; la persona en medio puede ser penetrada mientras interactúa con los genitales de quien está al frente.'},
+    {nombre:'Cadena de 69s', desc:'Los tres participantes se recuestan de lado en cadena para estimular los genitales de la persona contigua de forma circular.'},
+    {nombre:'La Torre Eiffel', desc:'Una persona es penetrada por una pareja mientras realiza sexo oral a la otra; los dos participantes activos quedan frente a frente.'},
+    {nombre:'El Trenecito', desc:'Tres personas se recuestan de lado, muy juntas, para permitir la penetración sucesiva en fila.'},
+    {nombre:'El Ciempiés Humano', desc:'Los tres participantes forman una cadena para realizar estimulación anal con la boca a la persona que tienen delante.'}
+  ]
+};
+
+var imgCap02 = null;
+var descCap03 = "Para facilitar esta práctica de sexo oral, quien recibe puede recostarse en la cama con la cabeza sobresaliendo por el borde y la boca abierta. La otra persona se coloca de frente e introduce el pene gradualmente, realizando pausas para permitir la adaptación y asegurar la comodidad mutua.";
+var descCap04 = "Ambas personas se tumban de frente con las piernas entrelazadas. Se recomienda que la persona que penetra se ubique ligeramente por encima de la receptora, coordinando el ritmo de las pelvis para aprovechar la fricción y estimular el clítoris.";
+var descCap05 = "Quien penetra permanece de pie y sostiene sobre sus caderas a la otra persona, que se sienta a horcajadas. Es aconsejable apoyarse en una superficie plana o un objeto para facilitar el impulso en cada movimiento.";
+var descCap02 = "Quien realiza la penetración se acuesta boca arriba sobre una superficie plana. La persona que recibe la penetración se sienta encima con las rodillas semiflexionadas, simulando un movimiento de cabalgata, lo que facilita la estimulación del punto G.";
+
+var imgsCap01 = ["assets/asset_image_16.jpg","assets/asset_image_17.jpg","assets/asset_image_18.jpg","assets/asset_image_19.jpg","assets/asset_image_20.jpg"];
+var imgCap01IdxCurrent = 0;
+var imgsCap04 = ["assets/asset_image_21.jpg","assets/asset_image_22.jpg","assets/asset_image_23.jpg","assets/asset_image_24.jpg","assets/asset_image_25.jpg"];
+var imgsCap03 = ["assets/asset_image_26.jpg","assets/asset_image_27.jpg","assets/asset_image_28.jpg","assets/asset_image_29.jpg","assets/asset_image_30.jpg"];
+var imgsCap02 = ["assets/asset_image_31.jpg","assets/asset_image_32.jpg","assets/asset_image_33.jpg","assets/asset_image_34.jpg","assets/asset_image_35.jpg"];
+var imgsCap05 = ["assets/asset_image_36.png","assets/asset_image_37.png","assets/asset_image_38.png","assets/asset_image_39.png"];
+var descCap01 = "Se utilizan cojines o almohadas como superficie de apoyo. La persona receptora se coloca de rodillas abrazando los cojines para mayor comodidad, mientras que la otra persona se arrodilla detras, descansando su pecho sobre la espalda de su pareja.";
+
+function mostrarCapitulo(nombre, desc, img, imgs){
+  var modal = document.getElementById('modal-posicion');
+  document.getElementById('modal-etiqueta').style.display = 'none';
+  document.getElementById('btn-otra').style.display = 'none';
+  document.getElementById('modal-nombre').textContent = nombre;
+  document.getElementById('modal-desc').textContent = desc;
+  var imgEl = document.getElementById('modal-img');
+  var nav = document.getElementById('modal-nav');
+  var wrapper = document.getElementById('modal-img-wrapper');
+  if(imgs && imgs.length > 0){
+    imgEl.src = imgs[0];
+    imgEl.style.display = 'block';
+    imgEl.dataset.imgs = JSON.stringify(imgs);
+    imgEl.dataset.idx = '0';
+    nav.style.display = imgs.length > 1 ? 'flex' : 'none';
+    wrapper.style.display = 'flex';
+    if(imgs.length > 1) document.getElementById('modal-counter').textContent = '1 / ' + imgs.length;
+  } else if(img){
+    imgEl.src = img;
+    imgEl.style.display = 'block';
+    imgEl.dataset.imgs = '';
+    nav.style.display = 'none';
+    wrapper.style.display = 'flex';
+  } else {
+    imgEl.src = '';
+    imgEl.style.display = 'none';
+    nav.style.display = 'none';
+    wrapper.style.display = 'none';
+  }
+  modal.style.display = 'flex';
+}
+function navModal(dir){
+  var imgEl = document.getElementById('modal-img');
+  var imgs = JSON.parse(imgEl.dataset.imgs || '[]');
+  if(!imgs.length) return;
+  var idx = parseInt(imgEl.dataset.idx) + dir;
+  if(idx < 0) idx = imgs.length - 1;
+  if(idx >= imgs.length) idx = 0;
+  imgEl.src = imgs[idx];
+  imgEl.dataset.idx = idx;
+  document.getElementById('modal-counter').textContent = (idx+1) + ' / ' + imgs.length;
+}
+
+var categoriaActual = null;
+var ultimaPosicion = null;
+function elegir(opcion){
+  categoriaActual = opcion;
+  var lista = posiciones[opcion];
+  var candidatos = lista.filter(function(p){ return p.nombre !== ultimaPosicion; });
+  if(candidatos.length === 0) candidatos = lista;
+  var pos = candidatos[Math.floor(Math.random() * candidatos.length)];
+  ultimaPosicion = pos.nombre;
+
+  var modal = document.getElementById('modal-posicion');
+  document.getElementById('modal-etiqueta').style.display = 'block';
+  document.getElementById('modal-nombre').textContent = pos.nombre;
+  document.getElementById('modal-desc').textContent = pos.desc;
+  document.getElementById('modal-img-wrapper').style.display = 'none';
+  document.getElementById('btn-otra').style.display = 'block';
+  modal.style.display = 'flex';
+}
+function otraPosicion(){
+  if(categoriaActual) elegir(categoriaActual);
+}
+
+function cerrarModal(){
+  document.getElementById('modal-posicion').style.display = 'none';
+}
+
+function otraVez(){
+  // re-trigger with same category — get active option
+  var activo = document.querySelector('.opcion-card.activa');
+  if(activo) activo.click();
+}
+
+</script>
+<footer id="footer" style="position:relative;z-index:1" style="padding:3rem 1.5rem;text-align:center;border-top:1px solid rgba(255,255,255,0.15)">
+
+  <div style="max-width:560px;margin:2.5rem auto 0;text-align:center">
+    <p style="font-family:'Coolvetica',sans-serif;color:#fff;line-height:1.8;font-size:1rem;margin-bottom:1.5rem">En Chile Positivo creemos que la salud sexual es el capítulo fundamental de tu bienestar. Con nuestro programa de Telemedicina PrEP, eliminamos las barreras geográficas para que tu lugar de residencia no limite tu decisión de cuidarte. Accede a un espacio profesional, privado y libre de juicios, diseñado para que vivas tu placer con total autonomía.</p>
+    <p style="font-family:'Coolvetica',sans-serif;color:#fff;font-size:1.1rem;margin-bottom:1.25rem">Menos preocupado, más <span style="color:#e8003d">PrEP</span>arado.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+    <a href="http://chilepositivo.setmore.com/" target="_blank" class="btn-glass" style="display:inline-block;text-decoration:none;padding:1rem 2.5rem;font-family:'Coolvetica',sans-serif;font-size:1.1rem;letter-spacing:1px">🗓️ Agenda tu cita</a>
+    <a href="http://chilepositivo.donando.cl/" target="_blank" class="btn-glass" style="display:inline-block;text-decoration:none;padding:1rem 2.5rem;font-family:'Coolvetica',sans-serif;font-size:1.1rem;letter-spacing:1px">❤️ Hazte socio</a>
+  </div>
+  </div>
+  <div style="margin-top:2.5rem;border-top:1px solid #1a1a1a;padding-top:2rem;display:flex;flex-wrap:wrap;justify-content:center;gap:2rem">
+    <a href="https://www.instagram.com/fchilepositivo" target="_blank" style="color:#888;text-decoration:none;font-family:'Coolvetica',sans-serif;font-size:.95rem;display:flex;align-items:center;gap:.4rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">📸 @fchilepositivo</a>
+    <a href="mailto:testeo@chilepositivo.org" style="color:#888;text-decoration:none;font-family:'Coolvetica',sans-serif;font-size:.95rem;display:flex;align-items:center;gap:.4rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">✉️ testeo@chilepositivo.org</a>
+    <a href="https://www.google.com/maps/search/?api=1&query=Huel%C3%A9n+71%2C+oficina+3%2C+Providencia%2C+Regi%C3%B3n+Metropolitana" target="_blank" style="color:#888;text-decoration:none;font-family:'Coolvetica',sans-serif;font-size:.95rem;display:flex;align-items:center;gap:.4rem;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#888'">📍 Huelén 71, of. 3, Providencia</a>
+  </div>
+</footer>
+
+<script>
+function enviarForm(){
+  var nombre = document.getElementById('inp-nombre').value;
+  var email = document.getElementById('inp-email').value;
+  if(!nombre || !email){ alert('Por favor completa tu nombre y email'); return; }
+  var url = 'https://docs.google.com/forms/d/e/1FAIpQLSf8x2EZ8eqZQT3IcAeRpGYq-6A_Kqmt9RHakemS6TZdOxxr5Q/formResponse';
+  var params = 'entry.519726748=' + encodeURIComponent(nombre) + '&entry.2125389111=' + encodeURIComponent(email);
+  fetch(url + '?' + params, { method: 'POST', mode: 'no-cors' })
+    .then(function(){ cerrarPopup(); })
+    .catch(function(){ cerrarPopup(); });
+}
+
+function cerrarPopup(){
+  document.getElementById('overlay').style.display='none';
+}
+</script>
+
+<div id="modal-posicion" style="display:none;position:fixed;inset:0;background:rgba(30,10,50,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;padding:1.5rem">
+  <div style="background:rgba(255,255,255,0.18);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid rgba(255,255,255,0.3);box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.25);border-radius:20px;padding:2rem;max-width:750px;width:100%;position:relative">
+    <button onclick="cerrarModal()" style="position:absolute;top:1rem;right:1.25rem;background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer">✕</button>
+    <p id="modal-etiqueta" style="font-family:'Bebas Neue',sans-serif;font-size:.8rem;color:#ff4d88;letter-spacing:3px;margin-bottom:1rem;text-align:center;display:none">TU POSICIÓN SECRETA</p>
+    <div id="modal-layout" style="display:flex;gap:1.5rem;align-items:flex-start">
+      <div id="modal-img-wrapper" style="display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;width:45%">
+      <img id="modal-img" src="" style="display:none;width:100%;border-radius:10px">
+      <div id="modal-nav" style="display:none;align-items:center;gap:12px">
+        <button onclick="navModal(-1)" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.25);box-shadow:0 4px 16px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:50%;width:34px;height:34px;color:#fff;font-size:1.2rem;cursor:pointer;transition:border-color .2s">‹</button>
+        <span id="modal-counter" style="font-family:'Coolvetica',sans-serif;font-size:.85rem;color:rgba(255,255,255,0.8)">1 / 5</span>
+        <button onclick="navModal(1)" style="background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.25);box-shadow:0 4px 16px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.2);border-radius:50%;width:34px;height:34px;color:#fff;font-size:1.2rem;cursor:pointer;transition:border-color .2s">›</button>
+      </div>
+    </div>
+      <div style="flex:1;text-align:center">
+        <h2 id="modal-nombre" style="font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:#fff;letter-spacing:2px;margin-bottom:1rem;line-height:1;font-weight:700;text-transform:uppercase"></h2>
+        <p id="modal-desc" style="font-family:'Coolvetica',sans-serif;color:rgba(255,255,255,0.75);line-height:1.7;font-size:.95rem;margin-bottom:1.5rem;font-weight:400"></p>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+          <button id="btn-otra" onclick="otraPosicion()" class="btn-glass" style="display:none;flex:1;min-width:140px">↻ OTRA</button>
+          <button onclick="cerrarModal()" class="btn-glass" style="flex:1;min-width:140px">VOLVER</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
