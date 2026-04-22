@@ -125,6 +125,21 @@ input::placeholder{color:rgba(255,255,255,0.6) !important}
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* ===== Mobile ===== */
+@media (max-width: 680px){
+  #modal-posicion{padding:1rem !important}
+  #modal-posicion > div{padding:1.25rem !important;max-height:90vh;overflow-y:auto}
+  #modal-layout{flex-direction:column !important;gap:1rem !important;align-items:stretch !important}
+  #modal-img-wrapper{width:100% !important;max-width:320px;margin:0 auto}
+  #modal-nombre{font-size:1.8rem !important;text-align:center}
+  #modal-desc{font-size:.95rem !important;line-height:1.55 !important}
+  #popup{padding:1.75rem 1.25rem !important}
+  #popup h2{font-size:1.7rem !important}
+  .chapters-grid{grid-template-columns:1fr !important;gap:1rem !important}
+  .chapter-card::after{font-size:5rem !important;top:-0.1rem !important}
+  #hero{padding:2rem 1rem .5rem !important}
+}
 </style>
 </head>
 <body><div style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none"><img src="assets/asset_image_01.png" style="position:absolute;top:3vh;left:3vw;width:110px;opacity:0.4;transform:rotate(8deg)"><img src="assets/asset_image_02.png" style="position:absolute;top:3vh;left:38vw;width:110px;opacity:0.4;transform:rotate(-5deg)"><img src="assets/asset_image_03.png" style="position:absolute;top:3vh;left:78vw;width:110px;opacity:0.4;transform:rotate(-10deg)"><img src="assets/asset_image_04.png" style="position:absolute;top:22vh;left:15vw;width:110px;opacity:0.4;transform:rotate(-12deg)"><img src="assets/asset_image_05.png" style="position:absolute;top:22vh;left:75vw;width:110px;opacity:0.4;transform:rotate(10deg)"><img src="assets/asset_image_06.png" style="position:absolute;top:40vh;left:2vw;width:110px;opacity:0.4;transform:rotate(6deg)"><img src="assets/asset_image_07.png" style="position:absolute;top:40vh;left:48vw;width:110px;opacity:0.4;transform:rotate(-8deg)"><img src="assets/asset_image_08.png" style="position:absolute;top:40vh;left:82vw;width:110px;opacity:0.4;transform:rotate(14deg)"><img src="assets/asset_image_09.png" style="position:absolute;top:60vh;left:20vw;width:110px;opacity:0.4;transform:rotate(-6deg)"><img src="assets/asset_image_10.png" style="position:absolute;top:60vh;left:70vw;width:110px;opacity:0.4;transform:rotate(8deg)"><img src="assets/asset_image_11.png" style="position:absolute;top:78vh;left:5vw;width:110px;opacity:0.4;transform:rotate(10deg)"><img src="assets/asset_image_12.png" style="position:absolute;top:78vh;left:55vw;width:110px;opacity:0.4;transform:rotate(-12deg)"></div>
